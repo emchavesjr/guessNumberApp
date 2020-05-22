@@ -14,6 +14,9 @@ import Card from '../components/Card'
 import Colors from '../constants/colors'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
+import MainButton from '../components/MainButton'
+
+import DefaultStyles from '../constants/default-styles'
 
 export default function StartGameScreen(props) {
 
@@ -25,7 +28,7 @@ export default function StartGameScreen(props) {
 	}
 
 	const resetInputHandler = () => {
-		setEnteredValue(true);
+		setConfirmed(false);
 		setEnteredValue('')
 	}
 
@@ -33,9 +36,9 @@ export default function StartGameScreen(props) {
 		const chosenNumber = parseInt(enteredValue)
 		if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
 			Alert.alert(
-				'Invalid number!', 
-				'Number has the be a number between 1 and 99.', 
-				[{text: 'Okay', style: 'destructive', onPress: resetInputHandler}]
+				'Número inválido!', 
+				'O número precisa estar entre 1 e 99.', 
+				[{text: 'Ok', style: 'destructive', onPress: resetInputHandler}]
 			)
 			return
 		}
@@ -50,9 +53,13 @@ export default function StartGameScreen(props) {
 	if (confirmed) {
 		confirmedOutput = (
 			<Card style={styles.summaryContainer}>
-				<Text>You selected</Text>
+				<Text style={DefaultStyles.title}>Você escolheu</Text>
 				<NumberContainer>{selectedNumber}</NumberContainer>
-				<Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)}/>
+				<MainButton 
+					onPress={() => props.onStartGame(selectedNumber)}
+				>
+					INICIAR JOGO	
+				</MainButton>
 			</Card>
 		)
 	}
@@ -62,9 +69,9 @@ export default function StartGameScreen(props) {
 			Keyboard.dismiss()	
 		}}>
 			<View style={styles.screen}>	
-				<Text style={styles.title}>Start a New Game!</Text>		
+				<Text style={styles.title}>Começe um Novo Jogo!</Text>		
 				<Card style={styles.inputContainer}>
-					<Text>Select a Number</Text>	
+					<Text style={DefaultStyles.title}>Escolha um Número</Text>	
 					<Input 
 						style={styles.input} 
 						blurOnSubmit 
@@ -77,10 +84,10 @@ export default function StartGameScreen(props) {
 					/>
 					<View style={styles.buttonContainer}>
 						<View style={styles.button}>
-							<Button title="Reset" onPress={resetInputHandler} color={Colors.accent} />
+							<Button title="Limpar" onPress={resetInputHandler} color={Colors.accent} />
 						</View>
 						<View style={styles.button}>
-							<Button title="Confirm" onPress={confirmInputHandler} color={Colors.primary} />
+							<Button title="Confirmar" onPress={confirmInputHandler} color={Colors.primary} />
 						</View>
 					</View>
 				</Card>
@@ -99,7 +106,8 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 20,
-		marginVertical: 10
+		marginVertical: 10,
+		fontFamily: 'open-sans-bold',
 	},
 	buttonContainer: {
 		flexDirection: 'row',
@@ -113,7 +121,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	button: {
-		width: '40%',
+		width: '50%',
 	},
 	input: {
 		width: 50,
@@ -122,5 +130,5 @@ const styles = StyleSheet.create({
 	summaryContainer: {
 		marginTop: 20,
 		alignItems: 'center',
-	}
+	},
 })
