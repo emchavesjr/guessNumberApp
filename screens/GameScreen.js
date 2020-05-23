@@ -18,10 +18,10 @@ const generateRandomBetween = (min, max, exclude) => {
 	}
 }
 
-const renderListItem = (numOfRounds, itemData) => (
+const renderListItem = (listLength, itemData) => (
 	<View key={value} style={styles.listItem}>
-		<Text style={DefaultStyles.body}>#{numOfRounds}</Text>
-		<Text style={DefaultStyles.body}>{value}</Text>
+		<Text style={DefaultStyles.body}>#{listLength - itemData.index}</Text>
+		<Text style={DefaultStyles.body}>{itemData.item}</Text>
 	</View>
 	)
 
@@ -84,7 +84,11 @@ export default function GameScreen(props) {
 					renderListItem(guess, pastGuesses.length - index)	
 				))}	
 			</ScrollView>*/}
-			<FlatList keyExtractor={(item) => item} data={pastGuesses} renderItem={renderListItem} />
+			<FlatList 
+				keyExtractor={(item) => item} 
+				data={pastGuesses} 
+				renderItem={() => renderListItem(pastGuesses.length)} />
+				contentContainerStyle={styles.list}
 		</View>
 		</View>
 	)
@@ -108,10 +112,10 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		flex: 1,                     // Add to fix scrolling in Android
-		width: '80%'
+		width: '60%'
 	},
 	list: {
-		alignItems: 'center',
+		// alignItems: 'center',
 		justifyContent: 'flex-end',
 		flexGrow: 1,
 	},
@@ -123,6 +127,6 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		width: '60%'
+		width: '100%'
 	}
 })
