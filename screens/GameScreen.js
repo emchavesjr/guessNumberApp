@@ -19,11 +19,11 @@ const generateRandomBetween = (min, max, exclude) => {
 }
 
 const renderListItem = (listLength, itemData) => (
-	<View key={value} style={styles.listItem}>
+	<View key={listLength} style={styles.listItem}>
 		<Text style={DefaultStyles.body}>#{listLength - itemData.index}</Text>
 		<Text style={DefaultStyles.body}>{itemData.item}</Text>
 	</View>
-	)
+)
 
 export default function GameScreen(props) {
 
@@ -84,12 +84,12 @@ export default function GameScreen(props) {
 					renderListItem(guess, pastGuesses.length - index)	
 				))}	
 			</ScrollView>*/}
-			<FlatList 
-				keyExtractor={(item) => item} 
-				data={pastGuesses} 
-				renderItem={() => renderListItem(pastGuesses.length)} />
-				contentContainerStyle={styles.list}
-		</View>
+				<FlatList 
+					keyExtractor={(item) => item} 
+					data={pastGuesses} 
+					renderItem={renderListItem.bind(this, pastGuesses.length)} 
+					contentContainerStyle={styles.list}/>
+			</View>
 		</View>
 	)
 }
